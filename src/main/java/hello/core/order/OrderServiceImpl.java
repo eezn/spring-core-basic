@@ -3,7 +3,6 @@ package hello.core.order;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
-import hello.core.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -24,4 +23,8 @@ public class OrderServiceImpl implements OrderService {
         return new Order(memberId, itemName, itemPrice, discountPrice);
     }
 
+    // 스프링 컨테이너 싱글톤 테스트용
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
+    }
 }
