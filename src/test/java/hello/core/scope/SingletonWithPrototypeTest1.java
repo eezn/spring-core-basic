@@ -1,7 +1,6 @@
 package hello.core.scope;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Scope;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Provider;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,15 +44,15 @@ public class SingletonWithPrototypeTest1 {
     @Component
     static class ClientBean {
 
-        private final ObjectProvider<PrototypeBean> prototypeObjectProvider;
+        private final Provider<PrototypeBean> prototypeObjectProvider;
 
         @Autowired
-        public ClientBean(ObjectProvider<PrototypeBean> prototypeObjectProvider) {
+        public ClientBean(Provider<PrototypeBean> prototypeObjectProvider) {
             this.prototypeObjectProvider = prototypeObjectProvider;
         }
 
         public int logic() {
-            PrototypeBean prototypeBean = prototypeObjectProvider.getObject();
+            PrototypeBean prototypeBean = prototypeObjectProvider.get();
             prototypeBean.addCount();
             return prototypeBean.getCount();
         }
